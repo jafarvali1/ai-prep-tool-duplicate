@@ -1527,10 +1527,10 @@ export default function RealisticInterviewPage() {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col font-['Inter'] text-on-surface overflow-x-hidden bg-surface">
-      <div className="pointer-events-none fixed inset-0 bg-primary-container/[0.07]" aria-hidden />
-      <div className="pointer-events-none fixed top-20 -left-24 h-72 w-72 rounded-full bg-primary-container/15 blur-[80px]" aria-hidden />
-      <div className="pointer-events-none fixed bottom-10 right-0 h-64 w-64 rounded-full bg-secondary-container/15 blur-[80px]" aria-hidden />
+    <div style={{ minHeight: "100vh", background: "var(--bg-primary)", color: "var(--text-primary)", fontFamily: "'Inter', sans-serif" }} className="relative flex flex-col overflow-x-hidden">
+      <div className="pointer-events-none fixed inset-0" style={{ background: "radial-gradient(circle, rgba(79, 70, 229, 0.08) 0%, transparent 70%)" }} aria-hidden />
+      <div className="pointer-events-none fixed top-20 -left-24 h-72 w-72 rounded-full" style={{ background: "rgba(79, 70, 229, 0.15)", filter: "blur(80px)" }} aria-hidden />
+      <div className="pointer-events-none fixed bottom-10 right-0 h-64 w-64 rounded-full" style={{ background: "rgba(99, 102, 241, 0.15)", filter: "blur(80px)" }} aria-hidden />
 
       {/* <header className="sticky top-0 z-50 border-b border-outline-variant/30 bg-surface/90 backdrop-blur-xl">
         <div className="mx-auto flex w-full max-w-screen-2xl flex-wrap items-center justify-between gap-x-5 gap-y-4 px-4 py-4 sm:px-6 sm:py-4 lg:px-8">
@@ -1570,7 +1570,7 @@ export default function RealisticInterviewPage() {
         <div className="flex w-full flex-col gap-10">
 
         {/* Stage progress — original position (top of main) */}
-        <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="mx-auto w-full max-w-[1000px] overflow-x-auto overscroll-contain rounded-xl border border-white/10 bg-white/[0.04] px-6 py-5 shadow-sm backdrop-blur-md">
+        <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} style={{ maxWidth: "1000px", margin: "0 auto", width: "100%", border: `1px solid var(--border)`, background: "rgba(79, 70, 229, 0.04)", borderRadius: "12px", padding: "24px", overflowX: "auto", backdropFilter: "blur(4px)" }} className="overflow-x-auto">
           <div className="mx-auto flex min-w-[680px] items-center justify-center gap-0 lg:min-w-0 lg:w-full">
             {STAGES.map((s, idx) => {
               const isActive = currentStage === s.id;
@@ -1578,15 +1578,44 @@ export default function RealisticInterviewPage() {
               return (
                 <div key={s.id} className="flex min-w-0 flex-1 items-center">
                   <div className="flex w-[70px] shrink-0 flex-col items-center gap-1.5">
-                    <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[11px] font-semibold transition-all duration-300 ${isActive ? "scale-105 bg-primary-container text-on-primary-container shadow-lg ring-2 ring-primary-container/50 ring-offset-1 ring-offset-surface" : isPast ? "bg-secondary-container text-on-secondary" : "bg-surface-container-highest text-on-surface-variant"}`}>
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: 32,
+                      height: 32,
+                      borderRadius: "50%",
+                      fontSize: 11,
+                      fontWeight: 600,
+                      transition: "all 0.3s",
+                      background: isActive ? "var(--accent)" : isPast ? "var(--success)" : "var(--bg-tertiary)",
+                      color: isActive ? "white" : isPast ? "white" : "var(--text-muted)",
+                      boxShadow: isActive ? "0 4px 12px rgba(79, 70, 229, 0.25)" : "none",
+                      transform: isActive ? "scale(1.05)" : "scale(1)"
+                    }}>
                       {s.id}
                     </div>
-                    <span className={`w-full px-1 text-center text-[10px] font-medium leading-snug ${isActive ? "font-bold text-primary-container" : isPast ? "font-semibold text-on-surface" : "text-on-surface-variant"}`}>
+                    <span style={{
+                      width: "100%",
+                      padding: "0 4px",
+                      textAlign: "center",
+                      fontSize: 10,
+                      fontWeight: isActive ? 700 : isPast ? 600 : 500,
+                      lineHeight: 1.4,
+                      color: isActive ? "var(--accent)" : isPast ? "var(--text-primary)" : "var(--text-secondary)"
+                    }}>
                       {s.name}
                     </span>
                   </div>
                   {idx < STAGES.length - 1 && (
-                    <div className={`mx-1 h-px min-w-5 max-w-full flex-1 ${isPast ? "bg-gradient-to-r from-secondary-container to-primary-container" : "bg-outline-variant/30"}`} />
+                    <div style={{
+                      margin: "0 4px",
+                      height: 1,
+                      minWidth: 20,
+                      maxWidth: "100%",
+                      flex: 1,
+                      background: isPast ? "var(--gradient-accent)" : "var(--border)"
+                    }} />
                   )}
                 </div>
               );
@@ -1595,27 +1624,91 @@ export default function RealisticInterviewPage() {
         </motion.div>
 
         <div className="mx-auto w-full max-w-[1000px]">
-        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }} className="flex w-full items-center justify-between overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] px-5 py-3">
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }} style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          width: "100%",
+          borderRadius: "12px",
+          border: `1px solid var(--border)`,
+          background: `rgba(79, 70, 229, 0.03)`,
+          padding: "16px 20px",
+          overflow: "hidden"
+        }}>
             <div className="flex items-center gap-3">
-              <div className="h-9 w-9 flex shrink-0 items-center justify-center rounded-lg bg-white/10">
-                <Headphones size={16} className="text-primary-container" />
+              <div style={{
+                width: 36,
+                height: 36,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 8,
+                background: "rgba(79, 70, 229, 0.1)",
+                flexShrink: 0,
+                color: "var(--accent)"
+              }}>
+                <Headphones size={16} />
               </div>
               <div>
-                <p className="text-sm font-semibold text-white">Interviewer voice</p>
-                <p className="text-xs text-white/60">How the AI sounds when reading questions aloud.</p>
+                <p style={{ fontSize: 14, fontWeight: 600, color: "var(--text-primary)", margin: 0 }}>Interviewer voice</p>
+                <p style={{ fontSize: 12, color: "var(--text-secondary)", margin: "4px 0 0" }}>How the AI sounds when reading questions aloud.</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <button type="button" onClick={() => setVoiceEnabled((v) => !v)} className="inline-flex shrink-0 whitespace-nowrap items-center justify-center gap-2 rounded-lg bg-white/10 px-3 py-1.5 text-xs font-semibold transition-colors hover:bg-white/15">
-                {voiceEnabled ? <Volume2 size={16} className="shrink-0 text-primary-container" aria-hidden /> : <VolumeX size={16} className="shrink-0" aria-hidden />}
+              <button type="button" onClick={() => setVoiceEnabled((v) => !v)} style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 8,
+                borderRadius: 8,
+                background: "rgba(79, 70, 229, 0.1)",
+                border: `1px solid var(--border)`,
+                padding: "8px 12px",
+                fontSize: 12,
+                fontWeight: 600,
+                color: "var(--text-primary)",
+                cursor: "pointer",
+                transition: "all 0.2s",
+                flexShrink: 0,
+                whiteSpace: "nowrap"
+              }} onMouseEnter={(e) => e.currentTarget.style.background = "rgba(79, 70, 229, 0.15)"} onMouseLeave={(e) => e.currentTarget.style.background = "rgba(79, 70, 229, 0.1)"}>
+                {voiceEnabled ? <Volume2 size={16} style={{ color: "var(--accent)" }} aria-hidden /> : <VolumeX size={16} aria-hidden />}
                 {voiceEnabled ? "TTS on" : "TTS off"}
               </button>
-              <select value={selectedVoiceName} onChange={(e) => setSelectedVoiceName(e.target.value)} className="w-[200px] shrink-0 rounded-lg bg-white/10 px-3 py-1.5 text-xs text-on-surface outline-none">
+              <select value={selectedVoiceName} onChange={(e) => setSelectedVoiceName(e.target.value)} style={{
+                width: 200,
+                borderRadius: 8,
+                background: "rgba(79, 70, 229, 0.1)",
+                border: `1px solid var(--border)`,
+                padding: "8px 12px",
+                fontSize: 12,
+                color: "var(--text-primary)",
+                outline: "none",
+                cursor: "pointer",
+                fontFamily: "'Inter', sans-serif",
+                flexShrink: 0
+              }}>
                 {availableVoices.map((v) => (
-                  <option key={v.name} value={v.name}>{v.name} ({v.lang})</option>
+                  <option key={v.name} value={v.name} style={{ background: "var(--bg-primary)", color: "var(--text-primary)" }}>{v.name} ({v.lang})</option>
                 ))}
               </select>
-              <button type="button" className="inline-flex shrink-0 whitespace-nowrap items-center justify-center gap-2 rounded-lg bg-white/10 px-5 py-3 text-xs font-semibold text-on-surface transition-colors hover:bg-white/15" onClick={() => {
+              <button type="button" style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 8,
+                borderRadius: 8,
+                background: "rgba(79, 70, 229, 0.1)",
+                border: `1px solid var(--border)`,
+                padding: "8px 16px",
+                fontSize: 12,
+                fontWeight: 600,
+                color: "var(--text-primary)",
+                cursor: "pointer",
+                transition: "all 0.2s",
+                flexShrink: 0,
+                whiteSpace: "nowrap"
+              }} onMouseEnter={(e) => e.currentTarget.style.background = "rgba(79, 70, 229, 0.15)"} onMouseLeave={(e) => e.currentTarget.style.background = "rgba(79, 70, 229, 0.1)"} onClick={() => {
                 if (!voiceEnabled || typeof window === "undefined" || !window.speechSynthesis) return;
                 const u = new SpeechSynthesisUtterance("Hello, this is your selected interview voice.");
                 const v = availableVoices.find((x) => x.name === selectedVoiceName);
@@ -1623,7 +1716,7 @@ export default function RealisticInterviewPage() {
                 window.speechSynthesis.cancel();
                 window.speechSynthesis.speak(u);
               }}>
-                <Sparkles size={18} className="shrink-0 text-primary-container" aria-hidden />
+                <Sparkles size={18} style={{ color: "var(--accent)" }} aria-hidden />
                 Test
               </button>
             </div>
@@ -1633,25 +1726,113 @@ export default function RealisticInterviewPage() {
         <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 xl:grid-cols-12">
           <AnimatePresence mode="wait">
           {currentStage === 6 ? (
-             <motion.div key="stage7" initial={{opacity:0, scale:0.98}} animate={{opacity:1, scale:1}} exit={{opacity:0}} className="lg:col-span-12 rounded-3xl bg-surface-container-low/40 backdrop-blur-2xl p-6 sm:p-8 lg:p-10 border border-outline-variant/50 shadow-2xl min-h-[50vh] mb-10 lg:mb-16 w-full">
-               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 sm:gap-6 mb-8 sm:mb-10 pb-6 sm:pb-8 border-b border-outline-variant/20">
-                   <div className="min-w-0 space-y-2">
-                     <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-['Outfit'] text-on-surface bg-clip-text text-transparent bg-gradient-to-r from-on-surface to-on-surface-variant">Interview transcript</h2>
-                     <p className="text-on-surface-variant text-sm md:text-base max-w-2xl leading-relaxed">Everything you practiced in this session, ready to save or print.</p>
+             <motion.div key="stage7" initial={{opacity:0, scale:0.98}} animate={{opacity:1, scale:1}} exit={{opacity:0}} style={{
+               gridColumn: "1 / -1",
+               borderRadius: "16px",
+               background: `rgba(79, 70, 229, 0.04)`,
+               backdropFilter: "blur(16px)",
+               padding: "24px",
+               border: `1px solid var(--border)`,
+               boxShadow: "0 20px 25px rgba(0, 0, 0, 0.1)",
+               minHeight: "50vh",
+               marginBottom: "40px",
+               width: "100%"
+             }}>
+               <div style={{
+                 display: "flex",
+                 flexDirection: "column",
+                 gap: "20px",
+                 marginBottom: "32px",
+                 paddingBottom: "24px",
+                 borderBottom: `1px solid var(--border)`
+               }} className="sm:flex-row sm:items-center sm:justify-between">
+                   <div style={{ minWidth: 0 }}>
+                     <h2 style={{
+                       fontSize: 28,
+                       fontWeight: 700,
+                       color: "var(--text-primary)",
+                       fontFamily: "'Outfit', sans-serif",
+                       marginBottom: 8
+                     }}>Interview transcript</h2>
+                     <p style={{
+                       color: "var(--text-secondary)",
+                       fontSize: 14,
+                       maxWidth: 600,
+                       lineHeight: 1.6,
+                       margin: 0
+                     }}>Everything you practiced in this session, ready to save or print.</p>
                    </div>
-                   <button type="button" onClick={() => window.print()} className="inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-secondary-container to-primary-container px-5 py-3 text-sm font-bold text-on-primary shadow-lg ring-1 ring-primary-container/40 transition-all hover:-translate-y-0.5 hover:ring-primary-container/60 sm:w-auto sm:px-6">
+                   <button type="button" onClick={() => window.print()} style={{
+                     display: "inline-flex",
+                     alignItems: "center",
+                     justifyContent: "center",
+                     gap: 8,
+                     borderRadius: 10,
+                     background: "var(--gradient-accent)",
+                     color: "white",
+                     border: "none",
+                     padding: "12px 20px",
+                     fontSize: 14,
+                     fontWeight: 600,
+                     cursor: "pointer",
+                     transition: "all 0.2s",
+                     boxShadow: "0 4px 12px rgba(79, 70, 229, 0.2)",
+                     width: "100%"
+                   }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = "0 6px 20px rgba(79, 70, 229, 0.3)"} onMouseLeave={(e) => e.currentTarget.style.boxShadow = "0 4px 12px rgba(79, 70, 229, 0.2)"} className="sm:w-auto">
                        <Download size={18} aria-hidden /> Save as PDF
                    </button>
                </div>
-               <div className="space-y-6 lg:space-y-8" id="printable-transcript">
+               <div style={{ display: "flex", flexDirection: "column", gap: "24px" }} id="printable-transcript">
                    {transcript.map((t, idx) => (
-                       <div key={idx} className="rounded-2xl bg-surface-container-highest p-5 sm:p-6 lg:p-8 border border-outline-variant/40 shadow-md w-full">
-                           <h3 className="text-base md:text-lg font-bold font-['Outfit'] text-on-surface mb-5 sm:mb-6 inline-flex items-center gap-2 bg-primary-container/20 px-4 py-2 rounded-full border border-primary-container/30">Round {idx+1}: {t.stage}</h3>
-                           <div className="space-y-3 sm:space-y-4 mt-1">
+                       <div key={idx} style={{
+                         borderRadius: "16px",
+                         background: "var(--bg-card)",
+                         padding: "24px",
+                         border: `1px solid var(--border)`,
+                         boxShadow: "0 1px 3px rgba(0, 0, 0, 0.05)",
+                         width: "100%"
+                       }}>
+                           <h3 style={{
+                             fontSize: 16,
+                             fontWeight: 700,
+                             color: "var(--text-primary)",
+                             fontFamily: "'Outfit', sans-serif",
+                             marginBottom: 16,
+                             display: "inline-flex",
+                             alignItems: "center",
+                             gap: 8,
+                             background: "rgba(79, 70, 229, 0.1)",
+                             padding: "8px 16px",
+                             borderRadius: 20,
+                             border: `1px solid var(--border-accent)`
+                           }}>Round {idx+1}: {t.stage}</h3>
+                           <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginTop: "8px" }}>
                                {t.chat.map((m: any, mIdx: number) => (
-                                    <div key={mIdx} className={`rounded-2xl px-5 py-5 sm:px-6 sm:py-5 shadow-sm ${m.sender === 'bot' ? 'bg-surface border border-outline-variant/20 text-left' : 'bg-primary-container/10 border border-primary-container/30 text-right ml-6 sm:ml-12 md:ml-20 max-w-full'}`}>
-                                        <span className={`text-[10px] font-bold uppercase tracking-wider block mb-3 ${m.sender === 'bot' ? 'text-secondary-container' : 'text-primary-container'}`}>{m.sender === 'bot' ? 'Interviewer' : `${candidateName || 'You'}`}</span>
-                                        <div className="text-[15px] leading-relaxed text-on-surface whitespace-pre-wrap break-words">
+                                    <div key={mIdx} style={{
+                                      borderRadius: "12px",
+                                      padding: "16px",
+                                      boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
+                                      background: m.sender === 'bot' ? "var(--bg-secondary)" : "rgba(79, 70, 229, 0.08)",
+                                      border: m.sender === 'bot' ? `1px solid var(--border)` : `1px solid var(--border-accent)`,
+                                      textAlign: m.sender === 'bot' ? "left" : "right",
+                                      marginLeft: m.sender === 'bot' ? 0 : 48
+                                    }}>
+                                        <span style={{
+                                          fontSize: 10,
+                                          fontWeight: 700,
+                                          textTransform: "uppercase",
+                                          letterSpacing: "0.5px",
+                                          display: "block",
+                                          marginBottom: 12,
+                                          color: m.sender === 'bot' ? "var(--text-secondary)" : "var(--accent)"
+                                        }}>{m.sender === 'bot' ? 'Interviewer' : `${candidateName || 'You'}`}</span>
+                                        <div style={{
+                                          fontSize: 15,
+                                          lineHeight: 1.6,
+                                          color: "var(--text-primary)",
+                                          whiteSpace: "pre-wrap",
+                                          wordBreak: "break-word"
+                                        }}>
                                             <ReactMarkdown components={interviewChatMarkdownComponents}>{m.content}</ReactMarkdown>
                                         </div>
                                         {m.evaluation && (
@@ -1684,19 +1865,58 @@ export default function RealisticInterviewPage() {
                </div>
            </motion.div>
           ) : currentStage === 0 ? (
-            <motion.div key="stage0" initial={{opacity:0, scale:0.98}} animate={{opacity:1, scale:1}} exit={{opacity:0, y:-12}} className="xl:col-span-12 flex w-full justify-center">
-              <div className="mx-auto flex w-full max-w-[1000px] flex-col items-center gap-4 pt-6 text-center">
+            <motion.div key="stage0" initial={{opacity:0, scale:0.98}} animate={{opacity:1, scale:1}} exit={{opacity:0, y:-12}} style={{ gridColumn: "1 / -1", display: "flex", width: "100%", justifyContent: "center" }}>
+              <div style={{
+                margin: "0 auto",
+                display: "flex",
+                width: "100%",
+                maxWidth: 1000,
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 16,
+                paddingTop: 24,
+                textAlign: "center"
+              }}>
                 {/* Icon */}
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-primary-container/45 bg-primary-container/12 shadow-[0_0_34px_rgba(139,92,246,0.3)]">
-                  <Video size={28} className="text-primary-container" aria-hidden />
+                <div style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: 56,
+                  height: 56,
+                  borderRadius: 16,
+                  border: `1px solid var(--border-accent)`,
+                  background: "rgba(79, 70, 229, 0.1)",
+                  boxShadow: "0 0 34px rgba(79, 70, 229, 0.3)"
+                }}>
+                  <Video size={28} style={{ color: "var(--accent)" }} aria-hidden />
                 </div>
 
                 {/* Title + subtitle */}
-                <div className="flex max-w-3xl flex-col items-center gap-4">
-                  <h2 className="font-['Outfit'] text-4xl font-bold tracking-tight text-on-surface md:text-5xl">
-                    Configure your <span className="text-primary-container">Interview Protocol</span>
+                <div style={{
+                  display: "flex",
+                  maxWidth: 800,
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 16
+                }}>
+                  <h2 style={{
+                    fontFamily: "'Outfit', sans-serif",
+                    fontSize: 40,
+                    fontWeight: 700,
+                    letterSpacing: "-0.5px",
+                    color: "var(--text-primary)",
+                    margin: 0
+                  }}>
+                    Configure your <span style={{ background: "var(--gradient-accent)", backgroundClip: "text", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Interview Protocol</span>
                   </h2>
-                  <p className="max-w-2xl text-sm leading-relaxed text-white/60 md:text-base">
+                  <p style={{
+                    maxWidth: 600,
+                    fontSize: 14,
+                    lineHeight: 1.6,
+                    color: "var(--text-secondary)",
+                    margin: 0
+                  }}>
                     Fine-tune the rigorousness of your 5-stage simulation. Bypassed the intro module to jump straight into dynamic technical and behavioral assessments.
                   </p>
                 </div>
@@ -1716,32 +1936,111 @@ export default function RealisticInterviewPage() {
                         initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: stage.id * 0.06 }}
-                        className={`flex h-[200px] w-[180px] flex-col items-center rounded-xl border ${stage.border} ${stage.bg} ${stage.glow} px-4 py-6 text-center backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-surface-container-high/45`}
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          height: 200,
+                          width: 180,
+                          borderRadius: 12,
+                          border: stage.border.replace('border-', 'border: 1px solid '),
+                          background: stage.bg.replace('bg-', 'rgba('),
+                          boxShadow: stage.glow.replace('shadow-', ''),
+                          padding: 16,
+                          textAlign: "center",
+                          backdropFilter: "blur(4px)",
+                          transition: "all 0.2s",
+                          cursor: "pointer"
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-4px)"}
+                        onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
                       >
-                        <div className="flex h-full w-full flex-col items-center justify-center gap-3">
-                          <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-white/10 ${stage.iconBg}`}>
-                            <stage.icon size={22} className={stage.iconText} />
+                        <div style={{
+                          display: "flex",
+                          height: "100%",
+                          width: "100%",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: 12
+                        }}>
+                          <div style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: 56,
+                            height: 56,
+                            borderRadius: "50%",
+                            border: `1px solid rgba(255, 255, 255, 0.1)`,
+                            background: stage.iconBg.replace('bg-', 'rgba(')
+                          }}>
+                            <stage.icon size={22} style={{ color: stage.iconText.replace('text-', '') }} />
                           </div>
-                          <div className="min-h-[3.25rem]">
-                            <span className="block text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant/70">
+                          <div style={{
+                            minHeight: 52,
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center"
+                          }}>
+                            <span style={{
+                              fontSize: 10,
+                              fontWeight: 700,
+                              textTransform: "uppercase",
+                              letterSpacing: "1px",
+                              color: "var(--text-secondary)",
+                              margin: 0
+                            }}>
                               Stage {stage.id}
                             </span>
-                            <h3 className="mt-1.5 font-['Outfit'] text-lg font-semibold leading-tight text-on-surface">
+                            <h3 style={{
+                              fontFamily: "'Outfit', sans-serif",
+                              fontSize: 18,
+                              fontWeight: 600,
+                              lineHeight: 1.2,
+                              color: "var(--text-primary)",
+                              marginTop: 8,
+                              margin: "8px 0 0"
+                            }}>
                               {stage.name}
                             </h3>
                           </div>
-                          <div className="relative mt-auto w-full">
+                          <div style={{ position: "relative", marginTop: "auto", width: "100%" }}>
                             <select
-                              className="h-10 w-full cursor-pointer appearance-none rounded-md border border-outline-variant/45 bg-surface-container-lowest/70 px-3 pr-8 text-sm font-semibold text-on-surface outline-none transition-all duration-200 hover:border-outline-variant/60 focus:border-primary-container focus:ring-1 focus:ring-primary-container/40"
+                              style={{
+                                height: 40,
+                                width: "100%",
+                                cursor: "pointer",
+                                appearance: "none",
+                                borderRadius: 8,
+                                border: `1px solid var(--border)`,
+                                background: "var(--bg-secondary)",
+                                padding: "8px 12px",
+                                paddingRight: 32,
+                                fontSize: 14,
+                                fontWeight: 600,
+                                color: "var(--text-primary)",
+                                outline: "none",
+                                fontFamily: "'Inter', sans-serif",
+                                transition: "all 0.2s"
+                              }}
                               value={stageCounts[stage.id]}
                               onChange={(e) => setStageCounts((p) => ({ ...p, [stage.id]: Number(e.target.value) }))}
                             >
                               {[...Array(20)].map((_, i) => (
-                                <option key={i+1} value={i+1}>{i+1} Question{i+1 > 1 ? 's' : ''}</option>
+                                <option key={i+1} value={i+1} style={{ background: "var(--bg-primary)", color: "var(--text-primary)" }}>{i+1} Question{i+1 > 1 ? 's' : ''}</option>
                               ))}
                             </select>
-                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-on-surface-variant/50">
-                              <svg className="h-3.5 w-3.5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                            <div style={{
+                              pointerEvents: "none",
+                              position: "absolute",
+                              inset: "0",
+                              right: 0,
+                              display: "flex",
+                              alignItems: "center",
+                              paddingRight: 12,
+                              color: "var(--text-secondary)"
+                            }}>
+                              <svg style={{ width: 14, height: 14, fill: "currentColor" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                             </div>
                           </div>
                         </div>
@@ -1751,12 +2050,32 @@ export default function RealisticInterviewPage() {
                 </div>
 
                 {/* Button */}
-                <div className="mt-10 flex justify-center">
+                <div style={{ marginTop: 40, display: "flex", justifyContent: "center" }}>
                   <button
                     type="button"
                     disabled={isGenerating}
                     onClick={handleStart}
-                    className="inline-flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-purple-500 to-indigo-500 px-8 py-3 font-['Outfit'] text-base font-bold tracking-wide text-on-primary shadow-[0_16px_36px_rgba(124,58,237,0.3)] ring-1 ring-primary-container/40 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_20px_44px_rgba(124,58,237,0.38)] hover:ring-primary-container/60 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-50"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 12,
+                      borderRadius: 10,
+                      background: "var(--gradient-accent)",
+                      color: "white",
+                      border: "none",
+                      padding: "12px 32px",
+                      fontFamily: "'Outfit', sans-serif",
+                      fontSize: 16,
+                      fontWeight: 700,
+                      letterSpacing: "0.3px",
+                      cursor: isGenerating ? "not-allowed" : "pointer",
+                      boxShadow: "0 16px 36px rgba(79, 70, 229, 0.3)",
+                      transition: "all 0.2s",
+                      opacity: isGenerating ? 0.5 : 1
+                    }}
+                    onMouseEnter={(e) => !isGenerating && (e.currentTarget.style.boxShadow = "0 20px 44px rgba(79, 70, 229, 0.4)", e.currentTarget.style.transform = "translateY(-2px)")}
+                    onMouseLeave={(e) => !isGenerating && (e.currentTarget.style.boxShadow = "0 16px 36px rgba(79, 70, 229, 0.3)", e.currentTarget.style.transform = "translateY(0)")}
                   >
                     {isGenerating ? (
                       <>
@@ -1774,38 +2093,115 @@ export default function RealisticInterviewPage() {
               </div>
             </motion.div>
           ) : (
-            <motion.div key="stageActive" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} className="grid grid-cols-1 items-start gap-6 xl:col-span-12 xl:grid-cols-12 xl:gap-8">
-              <div className="order-1 flex min-h-0 min-w-0 flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#111118]/95 shadow-2xl backdrop-blur-xl xl:col-span-8 xl:h-[min(72vh,820px)] xl:max-h-[calc(100vh-9rem)]">
-                <div className="flex shrink-0 items-center justify-between gap-3 border-b border-white/[0.08] px-4 py-3 md:px-5">
-                  <div className="flex min-w-0 items-center gap-2.5">
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.06]">
-                      <MessageSquare size={18} className="text-[#008a3e]" aria-hidden />
+            <motion.div key="stageActive" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} style={{
+              display: "grid",
+              gridTemplateColumns: "1fr",
+              gap: 24,
+              gridColumn: "1 / -1"
+            }} className="xl:grid-cols-12 xl:gap-8">
+              <div style={{
+                display: "flex",
+                flexDirection: "column",
+                overflow: "hidden",
+                borderRadius: "20px",
+                border: `1px solid var(--border)`,
+                background: "rgba(79, 70, 229, 0.03)",
+                boxShadow: "0 20px 25px rgba(0, 0, 0, 0.1)",
+                backdropFilter: "blur(16px)",
+                gridColumn: "1 / -1"
+              }} className="xl:col-span-8">
+                <div style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: 12,
+                  borderBottom: `1px solid var(--border)`,
+                  padding: "12px 16px",
+                  flexShrink: 0
+                }}>
+                  <div style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 10,
+                    minWidth: 0
+                  }}>
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: 36,
+                      height: 36,
+                      borderRadius: 8,
+                      border: `1px solid var(--border)`,
+                      background: "rgba(79, 70, 229, 0.1)",
+                      flexShrink: 0
+                    }}>
+                      <MessageSquare size={18} style={{ color: "var(--accent)" }} aria-hidden />
                     </div>
-                    <div className="min-w-0">
-                      <h3 className="font-['Outfit'] text-sm font-semibold tracking-tight text-white">Conversation</h3>
-                      <p className="truncate text-xs text-white/45">Enter to send · Shift+Enter new line</p>
+                    <div style={{
+                      minWidth: 0
+                    }}>
+                      <h3 style={{
+                        fontFamily: "'Outfit', sans-serif",
+                        fontSize: 14,
+                        fontWeight: 600,
+                        letterSpacing: "0.3px",
+                        color: "var(--text-primary)",
+                        margin: 0
+                      }}>Conversation</h3>
+                      <p style={{
+                        truncate: "ellipsis",
+                        fontSize: 12,
+                        color: "var(--text-secondary)",
+                        margin: "2px 0 0"
+                      }}>Enter to send · Shift+Enter new line</p>
                     </div>
                   </div>
-                  <div className="flex shrink-0 items-center gap-2">
+                  <div style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    flexShrink: 0
+                  }}>
                     <button
                       type="button"
                       onClick={nextStage}
                       disabled={loading}
-                      className={`shrink-0 rounded-full px-5 py-2 text-center text-[11px] font-extrabold uppercase tracking-widest transition-all duration-300 ${
-                        readyForNextStage
-                          ? "animate-pulse border-transparent bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-[0_0_20px_rgba(16,185,129,0.4)] ring-2 ring-emerald-500/50 ring-offset-2 ring-offset-[#111118]"
-                          : "border border-white/15 bg-white/[0.06] text-white/80 hover:bg-white/10"
-                      } disabled:opacity-45`}
+                      style={{
+                        borderRadius: 20,
+                        padding: "8px 20px",
+                        textAlign: "center",
+                        fontSize: 11,
+                        fontWeight: 700,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.5px",
+                        transition: "all 0.3s",
+                        cursor: loading ? "not-allowed" : "pointer",
+                        border: readyForNextStage ? "none" : `1px solid var(--border)`,
+                        background: readyForNextStage ? "var(--success)" : "rgba(79, 70, 229, 0.1)",
+                        color: readyForNextStage ? "white" : "var(--text-primary)",
+                        boxShadow: readyForNextStage ? "0 0 20px rgba(16, 185, 129, 0.4)" : "none",
+                        opacity: loading ? 0.45 : 1,
+                        animation: readyForNextStage ? "pulse 2s ease-in-out infinite" : "none"
+                      }}
                     >
                       {currentStage === 5 ? "Finish interview" : "Next stage"}
                     </button>
                   </div>
                 </div>
 
-                <div className="shrink-0 px-4 pt-2 pb-1 md:px-5">
-                  <div className="flex items-start gap-2 rounded-lg border border-primary-container/25 bg-primary-container/[0.12] px-3 py-2">
-                    <Lightbulb size={15} className="mt-0.5 shrink-0 text-primary-container" aria-hidden />
-                    <p className="min-w-0 text-xs leading-snug text-white/65">
+                <div style={{ flexShrink: 0, padding: "8px 16px 4px", fontSize: 0 }} className="md:px-5">
+                  <div style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: 8,
+                    borderRadius: 8,
+                    border: `1px solid var(--border-accent)`,
+                    background: "rgba(79, 70, 229, 0.08)",
+                    padding: "12px",
+                  }}>
+                    <Lightbulb size={15} style={{ marginTop: 4, flexShrink: 0, color: "var(--accent)" }} aria-hidden />
+                    <p style={{ minWidth: 0, fontSize: 12, lineHeight: 1.4, color: "var(--text-secondary)", margin: 0 }}>
                       {currentStage === 1 && "Intro only: your name, background, strengths, and goal."}
                       {currentStage === 3 && "Hiring manager: behavioral and project-focused questions."}
                       {currentStage === 4 && "Technical panel: rigorous, interview-standard depth."}
@@ -1992,35 +2388,84 @@ export default function RealisticInterviewPage() {
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-1">
                   <div className={`relative flex aspect-video items-center justify-center overflow-hidden rounded-3xl border bg-surface-container-lowest shadow-2xl transition-all duration-500 ${aiSpeaking ? "border-primary-container shadow-lg ring-2 ring-primary-container/30" : "border-outline-variant/30"}`}>
                     <div className={`flex h-32 w-32 items-center justify-center rounded-full border border-outline-variant/50 bg-surface-container-high shadow-2xl transition-transform duration-700 ${aiSpeaking ? "scale-110 border-primary-container ring-2 ring-primary-container/40 shadow-lg" : ""}`}>
-                      <div className="relative">
-                        <UserRound size={48} className={aiSpeaking ? "text-primary-container" : "text-on-surface-variant"} />
-                        <Sparkles size={16} className="absolute -right-1 -top-1 animate-pulse text-primary-container" />
+                      <div style={{ position: "relative" }}>
+                        <UserRound size={48} style={{ color: aiSpeaking ? "var(--accent)" : "var(--text-secondary)" }} />
+                        <Sparkles size={16} style={{ position: "absolute", right: -4, top: -4, animation: "pulse 2s ease-in-out infinite", color: "var(--accent)" }} />
                       </div>
                     </div>
                     {aiSpeaking && (
-                      <div className="absolute bottom-[18%] flex h-8 items-end gap-1">
+                      <div style={{ position: "absolute", bottom: "18%", display: "flex", height: 32, alignItems: "flex-end", gap: 4 }}>
                         {[1, 2, 3, 4, 5].map((i) => (
-                          <div key={i} className="w-1.5 rounded-full bg-primary-container" style={{ height: `${24 + (i * 7) % 40}%`, animation: `pulse ${0.25 + i * 0.05}s ease-in-out infinite alternate` }} />
+                          <div key={i} style={{ width: 6, borderRadius: 3, background: "var(--accent)", height: `${24 + (i * 7) % 40}%`, animation: `pulse ${0.25 + i * 0.05}s ease-in-out infinite alternate` }} />
                         ))}
                       </div>
                     )}
-                    <div className="absolute bottom-5 left-5 rounded-xl border border-outline-variant/30 bg-surface/60 px-4 py-2 backdrop-blur-xl">
-                      <span className="text-xs font-bold tracking-wider text-on-surface">PrepAI</span>
+                    <div style={{
+                      position: "absolute",
+                      bottom: 20,
+                      left: 20,
+                      borderRadius: 12,
+                      border: `1px solid var(--border)`,
+                      background: "rgba(79, 70, 229, 0.08)",
+                      padding: "8px 16px",
+                      backdropFilter: "blur(12px)"
+                    }}>
+                      <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.5px", color: "var(--text-primary)" }}>PrepAI</span>
                     </div>
                   </div>
-                  <div className="relative aspect-video overflow-hidden rounded-3xl border border-outline-variant/30 bg-surface-container-lowest shadow-2xl">
+                  <div style={{
+                    position: "relative",
+                    aspectRatio: "16 / 9",
+                    overflow: "hidden",
+                    borderRadius: "20px",
+                    border: `1px solid var(--border)`,
+                    background: "var(--bg-secondary)",
+                    boxShadow: "0 20px 25px rgba(0, 0, 0, 0.1)"
+                  }}>
                     {webcamEnabled ? (
-                      <Webcam audio={false} className="h-full w-full object-cover opacity-90" mirrored />
+                      <Webcam audio={false} style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.9 }} mirrored />
                     ) : (
-                      <div className="flex h-full flex-col items-center justify-center text-outline-variant/50">
-                        <CameraOff size={48} className="mb-4 opacity-50" />
-                        <span className="text-sm font-medium tracking-widest uppercase">Stream offline</span>
+                      <div style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        height: "100%",
+                        color: "var(--text-secondary)"
+                      }}>
+                        <CameraOff size={48} style={{ marginBottom: 16, opacity: 0.5 }} />
+                        <span style={{ fontSize: 14, fontWeight: 500, letterSpacing: "1px", textTransform: "uppercase" }}>Stream offline</span>
                       </div>
                     )}
-                    <div className="absolute bottom-5 left-5 max-w-[calc(100%-5rem)] rounded-xl border border-outline-variant/30 bg-surface/60 px-4 py-2 backdrop-blur-xl">
-                      <span className="break-words text-xs font-bold leading-snug tracking-wider text-on-surface">{candidateName} (You)</span>
+                    <div style={{
+                      position: "absolute",
+                      bottom: 20,
+                      left: 20,
+                      maxWidth: "calc(100% - 5rem)",
+                      borderRadius: 12,
+                      border: `1px solid var(--border)`,
+                      background: "rgba(79, 70, 229, 0.08)",
+                      padding: "8px 16px",
+                      backdropFilter: "blur(12px)"
+                    }}>
+                      <span style={{ wordBreak: "break-word", fontSize: 12, fontWeight: 700, lineHeight: 1.2, letterSpacing: "0.5px", color: "var(--text-primary)" }}>{candidateName} (You)</span>
                     </div>
-                    <button type="button" onClick={() => setWebcamEnabled(!webcamEnabled)} aria-label={webcamEnabled ? "Turn camera off" : "Turn camera on"} className="absolute right-5 top-5 rounded-full border border-outline-variant/30 bg-surface/60 p-3 text-on-surface backdrop-blur-xl transition hover:bg-surface-container-high">
+                    <button type="button" onClick={() => setWebcamEnabled(!webcamEnabled)} aria-label={webcamEnabled ? "Turn camera off" : "Turn camera on"} style={{
+                      position: "absolute",
+                      right: 20,
+                      top: 20,
+                      borderRadius: "50%",
+                      border: `1px solid var(--border)`,
+                      background: "rgba(79, 70, 229, 0.08)",
+                      padding: 12,
+                      color: "var(--text-primary)",
+                      backdropFilter: "blur(12px)",
+                      cursor: "pointer",
+                      transition: "all 0.2s",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center"
+                    }} onMouseEnter={(e) => e.currentTarget.style.background = "rgba(79, 70, 229, 0.15)"} onMouseLeave={(e) => e.currentTarget.style.background = "rgba(79, 70, 229, 0.08)"}>
                       {webcamEnabled ? <Camera size={18} aria-hidden /> : <CameraOff size={18} aria-hidden />}
                     </button>
                   </div>
@@ -2035,20 +2480,93 @@ export default function RealisticInterviewPage() {
       </main>
 
       {showBriefModal && (
-        <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
-          <div className="w-full max-w-xl card p-6 sm:p-8 space-y-4">
-            <h3 className="text-xl font-semibold font-['Outfit'] text-on-surface">Project context needed</h3>
-            <p className="text-sm text-on-surface-variant leading-relaxed">{briefPromptText}</p>
+        <div style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 100,
+          background: "rgba(0, 0, 0, 0.6)",
+          backdropFilter: "blur(4px)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "16px"
+        }}>
+          <div style={{
+            width: "100%",
+            maxWidth: 480,
+            background: "var(--bg-card)",
+            border: `1px solid var(--border)`,
+            borderRadius: "16px",
+            padding: "32px",
+            boxShadow: "0 20px 25px rgba(0, 0, 0, 0.1)",
+            display: "flex",
+            flexDirection: "column",
+            gap: 16
+          }}>
+            <h3 style={{
+              fontSize: 20,
+              fontWeight: 600,
+              fontFamily: "'Outfit', sans-serif",
+              color: "var(--text-primary)",
+              margin: 0
+            }}>Project context needed</h3>
+            <p style={{
+              fontSize: 14,
+              color: "var(--text-secondary)",
+              lineHeight: 1.6,
+              margin: 0
+            }}>{briefPromptText}</p>
             <textarea
-              className="w-full min-h-[140px] bg-surface-container-high border border-outline-variant/40 rounded-xl px-4 py-3 text-sm text-on-surface outline-none focus:ring-2 focus:ring-primary-container focus:border-transparent"
+              style={{
+                width: "100%",
+                minHeight: 140,
+                background: "var(--bg-secondary)",
+                border: `1px solid var(--border)`,
+                borderRadius: 12,
+                padding: "12px 16px",
+                fontSize: 14,
+                color: "var(--text-primary)",
+                outline: "none",
+                fontFamily: "'Inter', sans-serif",
+                resize: "vertical",
+                transition: "all 0.2s"
+              }}
+              onFocus={(e) => e.currentTarget.style.borderColor = "var(--accent)"}
+              onBlur={(e) => e.currentTarget.style.borderColor = "var(--border)"}
               rows={6}
               value={briefInput}
               onChange={(e) => setBriefInput(e.target.value)}
               placeholder="Describe company, project problem, users, stack, your role, and impact..."
             />
-            <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pt-2">
-              <button className="btn-secondary" onClick={() => setShowBriefModal(false)}>Cancel</button>
-              <button className="btn-primary" onClick={handleSubmitBriefAndStart}>Proceed</button>
+            <div style={{
+              display: "flex",
+              flexDirection: "column-reverse",
+              gap: 12,
+              paddingTop: 8
+            }} className="sm:flex-row sm:justify-end">
+              <button style={{
+                borderRadius: 10,
+                background: "var(--bg-secondary)",
+                border: `1px solid var(--border)`,
+                padding: "11px 24px",
+                fontSize: 14,
+                fontWeight: 600,
+                color: "var(--text-primary)",
+                cursor: "pointer",
+                transition: "all 0.2s"
+              }} onMouseEnter={(e) => e.currentTarget.style.background = "var(--bg-tertiary)"} onMouseLeave={(e) => e.currentTarget.style.background = "var(--bg-secondary)"} onClick={() => setShowBriefModal(false)}>Cancel</button>
+              <button style={{
+                borderRadius: 10,
+                background: "var(--gradient-accent)",
+                border: "none",
+                padding: "11px 24px",
+                fontSize: 14,
+                fontWeight: 600,
+                color: "white",
+                cursor: "pointer",
+                transition: "all 0.2s",
+                boxShadow: "0 4px 12px rgba(79, 70, 229, 0.2)"
+              }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = "0 6px 20px rgba(79, 70, 229, 0.3)"} onMouseLeave={(e) => e.currentTarget.style.boxShadow = "0 4px 12px rgba(79, 70, 229, 0.2)"} onClick={handleSubmitBriefAndStart}>Proceed</button>
             </div>
           </div>
         </div>
